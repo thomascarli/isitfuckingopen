@@ -1,10 +1,8 @@
 <h1> FUCK YEA </h1>
-
-
-	<% @spots do |spot| %>
-
-<p>
-	<%= spot.name %>
-</p>
-
-<% end %>
+<div class='search-container'>
+  <input class='location-search-input' placeholder="WHERE?" onfocus="this.placeholder = ''" onblur="this.placeholder = 'WHERE?'"></input>
+	<button class='location-search-submit'>FUCK!</button>
+</div>
+<div class='response-container'>
+	<h2 class='location-open-data'></h2>
+</div>

@@ -5,6 +5,8 @@ Rails.application.routes.draw do
   # You can have the root of your site routed with "root"
    root 'locations#index'
 
+   post 'generate_location_data', controller: "locations"
+
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'
 

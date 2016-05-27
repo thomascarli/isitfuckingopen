@@ -15,6 +15,9 @@
 //= require turbolinks
 //= require_tree .
 
+
+
+
 function generate_location_data(location_name) {
   gps_data = retrieve_gps_data();
 
@@ -35,6 +38,20 @@ function retrieve_gps_data() {
 }
 
 $( document ).on('ready page:load', function() {
+
+	//Global vars
+	var lon = '';
+	var lat = '';
+
+	// Get Geo Location
+	if(navigator.geolocation){
+        navigator.geolocation.getCurrentPosition(function(position){
+        	lon = position.coords.longitude;
+        	lat = position.coords.latitude;
+        });
+	} else {
+		console.log("navigator is not supported");
+	}
 
   $(".location-search-submit").on('click', function(e) {
     var location_name = $(".location-search-input").val();

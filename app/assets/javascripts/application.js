@@ -14,3 +14,26 @@
 //= require jquery_ujs
 //= require turbolinks
 //= require_tree .
+
+
+
+// short hand for ON ready
+$(function() {
+
+	//Global vars
+	var lon = '';
+	var lat = '';
+
+	// Get Geo Location
+	if(navigator.geolocation){
+        navigator.geolocation.getCurrentPosition(function(position){
+        	lon = position.coords.longitude;
+        	lat = position.coords.latitude;
+        });
+	} else {
+		console.log("navigator is not supported");
+	}
+
+});
+
+

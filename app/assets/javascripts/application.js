@@ -17,8 +17,27 @@
 
 
 
-// short hand for ON ready
-$(function() {
+
+function generate_location_data(location_name) {
+  gps_data = retrieve_gps_data();
+
+  $.ajax({
+    url: "/generate_location_data",
+    type: "POST",
+    data: { "location_name": location_name, "gps_data": gps_data },
+    success: function(json) {
+      var is_it_open = json.is_it_open.toString();
+      $('.location-open-data').text(is_it_open);
+    }
+  });
+}
+
+function retrieve_gps_data() {
+  // Eventually this will be browsers location data -TC
+  return {"lat": -33.8670522, "lon": 151.1957362}
+}
+
+$( document ).on('ready page:load', function() {
 
 	//Global vars
 	var lon = '';
@@ -34,6 +53,9 @@ $(function() {
 		console.log("navigator is not supported");
 	}
 
+  $(".location-search-submit").on('click', function(e) {
+    var location_name = $(".location-search-input").val();
+    generate_location_data(location_name);
+  });
+
 });
-
-

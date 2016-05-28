@@ -15,43 +15,47 @@
 //= require turbolinks
 //= require_tree .
 
-
+var lat = "";
+var lon = "";
 
 
 function generate_location_data(location_name) {
-  gps_data = retrieve_gps_data();
+  gps_data = {"lat": lat, "lon": lon};
 
   $.ajax({
     url: "/generate_location_data",
     type: "POST",
     data: { "location_name": location_name, "gps_data": gps_data },
     success: function(json) {
-      var is_it_open = json.is_it_open.toString();
+      is_it_open = json.is_it_open.toString();
+      name = json.loc_name.toString();
+      address = json.address.toString();
+
       $('.location-open-data').text(is_it_open);
+      $('.location-name').text(name);
+      $('.location-address').text(address);
     }
   });
 }
 
 function retrieve_gps_data() {
+
+
+  // Get Geo Location
+  if(navigator.geolocation){
+    navigator.geolocation.getCurrentPosition(function(position) {
+      lat = position.coords.latitude;
+      lon = position.coords.longitude;
+    });
+  } else {
+    console.log("navigator is not supported");
+  }
+
   // Eventually this will be browsers location data -TC
-  return {"lat": -33.8670522, "lon": 151.1957362}
 }
 
 $( document ).on('ready page:load', function() {
-
-	//Global vars
-	var lon = '';
-	var lat = '';
-
-	// Get Geo Location
-	if(navigator.geolocation){
-        navigator.geolocation.getCurrentPosition(function(position){
-        	lon = position.coords.longitude;
-        	lat = position.coords.latitude;
-        });
-	} else {
-		console.log("navigator is not supported");
-	}
+  retrieve_gps_data();
 
   $(".location-search-submit").on('click', function(e) {
     var location_name = $(".location-search-input").val();

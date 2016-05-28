@@ -5,7 +5,7 @@ class LocationsController < ApplicationController
   def generate_location_data
     location_data = parse_location_data(params)
 
-    result = {"is_it_open": location_data[:open_data]}
+    result = {"is_it_open": location_data[:open_data], "loc_name": location_data[:name], "address": location_data[:address]}
 
     respond_to do |format|
       format.json { render json: result}
@@ -20,15 +20,28 @@ class LocationsController < ApplicationController
     name  = params["location_name"]
     location_data = {}
 
-    location_id = client.spots(lat, lon, name: name).first.try(:place_id)
+    vicinity = Geocoder.search(lat + ", " + lon).first.formatted_address
+    query = name + " near " + vicinity
+    location_id = client.spots_by_query(query).first.try(:place_id)
+
     if location_id.nil?
       location_data[:open_data] = "Fuck you, no results found."
     else
       location = client.spot(location_id)
-      location_data[:open_data] = location.opening_hours["open_now"]
+      location_data[:open_data] = get_opening_data(location.opening_hours)
+      location_data[:name]      = location.name
+      location_data[:address]   = location.formatted_address
     end
 
     location_data
+  end
+
+  def get_opening_data(hours)
+    if hours
+      hours["open_now"]
+    else
+      "WE DON'T FUCKING KNOW"
+    end
   end
 
   def client

@@ -8,6 +8,10 @@ gem "figaro"
 
 gem "pry"
 
+gem "thin"
+
+gem "geocoder"
+
 
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'

@@ -13,3 +13,38 @@
  *= require_tree .
  *= require_self
  */
+
+
+
+body {
+	background-color: #faebd7;
+	margin-top: 25px;
+}
+
+
+input {
+	height: 2em;
+	width: 20em;
+}
+
+p {
+	font-family: 'Hashtag';
+	font-size: 35px;
+}
+
+
+/* Typeography for application */
+
+h1 {
+	color: #8C001A;
+}
+
+
+
+
+
+
+
+
+
+/* Media Queries */

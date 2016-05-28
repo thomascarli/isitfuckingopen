@@ -13,3 +13,22 @@
  *= require_tree .
  *= require_self
  */
+
+
+body {
+	background-color: #faebd7;
+}
+
+
+/* Typeography for application */
+
+h1 {
+	color: #8C001A;
+}
+
+
+
+
+
+
+/* Media Queries */

@@ -18,6 +18,7 @@ class LocationsController < ApplicationController
     lat   = params["gps_data"]["lat"]
     lon   = params["gps_data"]["lon"]
     name  = params["location_name"]
+
     location_data = {}
 
     vicinity = Geocoder.search(lat + ", " + lon).first.formatted_address

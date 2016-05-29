@@ -59,6 +59,7 @@ $( document ).on('ready page:load', function() {
   retrieve_gps_data();
 
   $(".location-search-submit").on('click', function(e) {
+    retrieve_gps_data();
     console.log(lat);
     console.log(lon);
     var location_name = $(".location-search-input").val();

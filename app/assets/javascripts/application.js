@@ -19,7 +19,7 @@ var lat = "";
 var lon = "";
 
 
-function generate_location_data(location_name) {
+function generate_location_data(location_name, lat, lon) {
   gps_data = {"lat": lat, "lon": lon};
 
   $.ajax({
@@ -54,6 +54,9 @@ function retrieve_gps_data() {
 function set_lat_lon(position) {
   lat = position.coords.latitude;
   lon = position.coords.longitude;
+
+  var location_name = $(".location-search-input").val();
+  generate_location_data(location_name, lat, lon);
 }
 
 $( document ).on('ready page:load', function() {
@@ -61,8 +64,7 @@ $( document ).on('ready page:load', function() {
   retrieve_gps_data();
 
   $(".location-search-submit").on('click', function(e) {
-    var location_name = $(".location-search-input").val();
-    generate_location_data(location_name);
+    retrieve_gps_data();
   });
 
 });

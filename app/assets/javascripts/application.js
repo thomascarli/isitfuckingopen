@@ -43,10 +43,7 @@ function retrieve_gps_data() {
 
   // Get Geo Location
   if(navigator.geolocation){
-    navigator.geolocation.getCurrentPosition(function(position) {
-      lat = position.coords.latitude;
-      lon = position.coords.longitude;
-    });
+    navigator.geolocation.getCurrentPosition(set_lat_lon);
   } else {
     console.log("navigator is not supported");
   }
@@ -54,14 +51,16 @@ function retrieve_gps_data() {
   // Eventually this will be browsers location data -TC
 }
 
+function set_lat_lon(position) {
+  lat = position.coords.latitude;
+  lon = position.coords.longitude;
+}
+
 $( document ).on('ready page:load', function() {
 
   retrieve_gps_data();
 
   $(".location-search-submit").on('click', function(e) {
-    retrieve_gps_data();
-    console.log(lat);
-    console.log(lon);
     var location_name = $(".location-search-input").val();
     generate_location_data(location_name);
   });

@@ -22,6 +22,21 @@ function handle_blank_input_error() {
   $('.error-text').text("Protip: No one likes you. Search for something asshat.");
 }
 
+function preLoader() {
+  $loading_container.show();
+  $search_submit.hide();
+  $search_input.hide();
+  // $response_container.hide();
+}
+
+function afterLoad() {
+  $loading_container.hide();
+  $search_submit.show();
+  $search_input.show();
+  // $response_container.hide();
+
+}
+
 
 function generate_location_data(location_name) {
   gps_data = {"lat": lat, "lon": lon};
@@ -30,7 +45,15 @@ function generate_location_data(location_name) {
     url: "/generate_location_data",
     type: "POST",
     data: { "location_name": location_name, "gps_data": gps_data },
+    beforeSend: function() {
+
+      preLoader();
+    },
+    complete: function() {
+      afterLoad();
+    },
     success: function(json) {
+      $response_container.empty();
       is_it_open = json.is_it_open.toString();
       name = json.loc_name.toString();
       address = json.address.toString();
@@ -60,7 +83,12 @@ $( document ).on('ready page:load', function() {
 
   // Cached jQuery variables
   $search_submit = $('.location-search-submit');
+  $search_input = $('.location-search-input');
+  $loading_container = $('.loading-container');
+  $response_container = $('.response_container');
+
   retrieve_gps_data();
+  $loading_container.hide();
 
   // Listen for enter key and trigger functions
   document.querySelector('.location-search-input').addEventListener('keypress', function (e) {

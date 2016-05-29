@@ -55,11 +55,41 @@ function retrieve_gps_data() {
 }
 
 $( document ).on('ready page:load', function() {
+
+  // Cached jQuery variables
+  $search_submit = $('.location-search-submit');
+
   retrieve_gps_data();
 
-  $(".location-search-submit").on('click', function(e) {
+  // Listen for enter key and trigger functions
+  document.querySelector('.location-search-input').addEventListener('keypress', function (e) {
+    var key = e.which || e.keyCode;
+    if (key === 13) {
+      var location_name = $(".location-search-input").val();
+      generate_location_data(location_name);  
+    } 
+  });
+
+
+  $search_submit.on('click', function(e) {
     var location_name = $(".location-search-input").val();
     generate_location_data(location_name);
   });
 
 });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

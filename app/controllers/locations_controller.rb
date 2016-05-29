@@ -18,7 +18,7 @@ class LocationsController < ApplicationController
     lat   = params["gps_data"]["lat"]
     lon   = params["gps_data"]["lon"]
     name  = params["location_name"]
-    
+
     location_data = {}
 
     vicinity = Geocoder.search(lat + ", " + lon).first.formatted_address
@@ -29,9 +29,7 @@ class LocationsController < ApplicationController
       location_data[:open_data] = "Fuck you, no results found."
     else
       location = client.spot(location_id)
-      puts location
       location_data[:open_data] = get_opening_data(location.opening_hours)
-      puts location_data[:open_data]
       location_data[:name]      = location.name
       location_data[:address]   = location.formatted_address
     end

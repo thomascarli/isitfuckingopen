@@ -19,7 +19,7 @@ class LocationsController < ApplicationController
     lon   = params["gps_data"]["lon"]
     name  = params["location_name"]
     location_data = {}
-    puts lat
+    puts "hello"
     puts lon
 
 

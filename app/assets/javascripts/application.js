@@ -54,6 +54,8 @@ function retrieve_gps_data() {
 function set_lat_lon(position) {
   lat = position.coords.latitude;
   lon = position.coords.longitude;
+  console.log(lat);
+  console.log(lon);
 
   var location_name = $(".location-search-input").val();
   generate_location_data(location_name, lat, lon);

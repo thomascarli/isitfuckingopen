@@ -18,6 +18,10 @@
 var lat = "";
 var lon = "";
 
+function handle_blank_input_error() {
+  $('.error-text').text("Protip: No one likes you. Search for something asshat.");
+}
+
 
 function generate_location_data(location_name) {
   gps_data = {"lat": lat, "lon": lon};
@@ -31,6 +35,7 @@ function generate_location_data(location_name) {
       name = json.loc_name.toString();
       address = json.address.toString();
 
+      $('.error-text').text("");
       $('.location-open-data').text(is_it_open);
       $('.location-name').text(name);
       $('.location-address').text(address);
@@ -39,16 +44,11 @@ function generate_location_data(location_name) {
 }
 
 function retrieve_gps_data() {
-
-
-  // Get Geo Location
   if(navigator.geolocation){
     navigator.geolocation.getCurrentPosition(set_lat_lon);
   } else {
     console.log("navigator is not supported");
   }
-
-  // Eventually this will be browsers location data -TC
 }
 
 function set_lat_lon(position) {
@@ -64,11 +64,15 @@ $( document ).on('ready page:load', function() {
 
   // Listen for enter key and trigger functions
   document.querySelector('.location-search-input').addEventListener('keypress', function (e) {
+    var location_name = $(".location-search-input").val();
     var key = e.which || e.keyCode;
     if (key === 13) {
-      var location_name = $(".location-search-input").val();
-      generate_location_data(location_name);  
-    } 
+      if (location_name == "") {
+        handle_blank_input_error();
+      } else {
+        generate_location_data(location_name);
+      }
+    }
   });
 
 
@@ -78,19 +82,3 @@ $( document ).on('ready page:load', function() {
   });
 
 });
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

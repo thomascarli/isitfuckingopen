@@ -19,22 +19,18 @@ class LocationsController < ApplicationController
     lon   = params["gps_data"]["lon"]
     name  = params["location_name"]
     location_data = {}
-    puts "hello"
-    puts lon
-
 
     vicinity = Geocoder.search(lat + ", " + lon).first.formatted_address
-    puts vicinity
     query = name + " near " + vicinity
-    puts query
     location_id = client.spots_by_query(query).first.try(:place_id)
-    puts location_id
 
     if location_id.nil?
       location_data[:open_data] = "Fuck you, no results found."
     else
       location = client.spot(location_id)
+      puts location
       location_data[:open_data] = get_opening_data(location.opening_hours)
+      puts location_data[:open_data]
       location_data[:name]      = location.name
       location_data[:address]   = location.formatted_address
     end

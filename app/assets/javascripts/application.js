@@ -13,6 +13,7 @@
 //= require jquery
 //= require jquery_ujs
 //= require turbolinks
+//= require moment
 //= require_tree .
 
 var lat = "";
@@ -32,11 +33,12 @@ function generate_location_data(location_name) {
     data: { "location_name": location_name, "gps_data": gps_data },
     success: function(json) {
       is_it_open = json.is_it_open.toString();
-      name = json.loc_name.toString();
-      address = json.address.toString();
+      closes_in  = json.closes_in.toString();
+      name       = json.loc_name.toString();
+      address    = json.address.toString();
 
       $('.error-text').text("");
-      $('.location-open-data').text(is_it_open);
+      $('.location-open-data').text("This shit closes in " + moment.preciseDiff(0, parseInt(closes_in)));
       $('.location-name').text(name);
       $('.location-address').text(address);
     }

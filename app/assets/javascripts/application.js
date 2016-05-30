@@ -33,12 +33,16 @@ function generate_location_data(location_name) {
     data: { "location_name": location_name, "gps_data": gps_data },
     success: function(json) {
       is_it_open = json.is_it_open.toString();
-      closes_in  = json.closes_in.toString();
+      closes_in  = parseInt(json.closes_in.toString());
       name       = json.loc_name.toString();
       address    = json.address.toString();
+      days       = moment.duration(closes_in, "seconds").get("days");
+      hours      = moment.duration(closes_in, "seconds").get("hours");
+      minutes    = moment.duration(closes_in, "seconds").get("minutes");
+      seconds    = moment.duration(closes_in, "seconds").get("seconds");
 
       $('.error-text').text("");
-      $('.location-open-data').text("This shit closes in " + moment.preciseDiff(0, parseInt(closes_in)));
+      $('.location-open-data').text("This shit closes in " + days + " days " + hours + " hours " + minutes + " minutes " + "and " + seconds + " seconds!");
       $('.location-name').text(name);
       $('.location-address').text(address);
     }

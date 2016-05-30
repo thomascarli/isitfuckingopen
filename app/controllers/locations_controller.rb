@@ -35,10 +35,10 @@ class LocationsController < ApplicationController
     else
       location = client.spot(location_id)
       location_data[:closing_time] = get_closing_data(location.opening_hours)
-      location_data[:opening_time] = get_opening_data(locatio.opening_hours)
+      location_data[:opening_time] = get_opening_data(location.opening_hours)
       location_data[:opens_in]     = get_closes_in(location_data[:opening_time])
       location_data[:closes_in]    = get_closes_in(location_data[:closing_time])
-      location_data[:open_data]    = get_opening_data(location.opening_hours)
+      location_data[:open_data]    = get_opening_bool(location.opening_hours)
       location_data[:name]         = location.name
       location_data[:address]      = location.formatted_address
     end
@@ -62,13 +62,13 @@ class LocationsController < ApplicationController
     if hours && hours["open_now"]
       calculate_operation_time(hours, "close")
     else
-      nil
+      false
     end
   end
 
   def get_opening_data(hours)
     if hours && hours["open_now"]
-      nil
+      false
     else
       calculate_operation_time(hours, "open")
     end
@@ -77,10 +77,10 @@ class LocationsController < ApplicationController
   def calculate_operation_time(hours, operation)
     hours_hash = {}
     hours["periods"].map do |v| hours_hash[v[operation]["day"]] = v[operation]["time"] end
-    house_hash[Date.today.wday]
+    hours_hash[Date.today.wday]
   end
 
-  def get_opening_data(hours)
+  def get_opening_bool(hours)
     if hours
       hours["open_now"]
     else

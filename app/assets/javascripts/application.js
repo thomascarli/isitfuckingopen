@@ -57,13 +57,9 @@ function generate_location_data(location_name) {
       name       = json.loc_name.toString();
       address    = json.address.toString();
 
-<<<<<<< HEAD
       $('.error-text').text("");
       $('.location-open-data').text(opens_in);
       $('.location-close-data').text(closes_in);
-=======
-      $('.location-open-data').text(is_it_open);
->>>>>>> 1c34d8faeb8cf0f0da43abd9a65159c86b2d5102
       $('.location-name').text(name);
       $('.location-address').text(address);
     }

@@ -13,7 +13,6 @@
 //= require jquery
 //= require jquery_ujs
 //= require turbolinks
-//= require moment
 //= require_tree .
 
 var lat = "";

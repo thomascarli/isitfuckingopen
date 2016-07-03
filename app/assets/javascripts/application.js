@@ -52,10 +52,14 @@ function generate_location_data(location_name) {
     },
     success: function(json) {
       is_it_open = json.is_it_open.toString();
-      name = json.loc_name.toString();
-      address = json.address.toString();
+      closes_in  = json.closes_in.toString();
+      opens_in   = json.opens_in.toString();
+      name       = json.loc_name.toString();
+      address    = json.address.toString();
 
-      $('.location-open-data').text(is_it_open);
+      $('.error-text').text("");
+      $('.location-open-data').text(opens_in);
+      $('.location-close-data').text(closes_in);
       $('.location-name').text(name);
       $('.location-address').text(address);
     }

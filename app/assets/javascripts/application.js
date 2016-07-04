@@ -17,6 +17,7 @@
 
 var lat = "";
 var lon = "";
+var timeoutId = 0;
 
 function handle_blank_input_error() {
   $error_text.text("Protip: No one likes you. Search for something asshat.");
@@ -121,19 +122,24 @@ $( document ).on('ready page:load', function() {
 
   // Listen for enter key and trigger functions
   document.querySelector('.location-search-input').addEventListener('keypress', function (e) {
-    var location_name = $(".location-search-input").val();
-    var key = e.which || e.keyCode;
-    if (key === 13) {
-      if (location_name == "") {
-        handle_blank_input_error();
-        $response_container.children().empty();
+    clearTimeout(timeoutId);
+    timeoutId = setTimeout(processKeyPress, 500);
 
-      } else {
-        generate_location_data(location_name);
+    function processKeyPress() {
+      var location_name = $(".location-search-input").val();
+      var key = e.which || e.keyCode;
+      if (key === 13) {
+        if (location_name == "") {
+          handle_blank_input_error();
+          $response_container.children().empty();
+
+        } else {
+          generate_location_data(location_name);
+        }
       }
-    }
-    else {
-      autocomplete(location_name + e.key);
+      else {
+        autocomplete(location_name + e.key);
+      }
     }
   });
 

@@ -7,7 +7,8 @@ class LocationsController < ApplicationController
       params["location_name"],
       lat: params["gps_data"]["lat"],
       lng: params["gps_data"]["lon"],
-      radius: 160000
+      radius: 16000,
+      types: 'establishment'
     )
 
     autocomplete_result = ::AutocompleteResultCarver.new(result).carve

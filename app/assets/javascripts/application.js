@@ -105,41 +105,6 @@ function set_lat_lon(position) {
   lon = position.coords.longitude;
 }
 
-// Get key press and preforms autoComplete
-// TEST json array
-var test = [
-    {"firstName":"John", "lastName":"Doe"},
-    {"firstName":"Anna", "lastName":"Smith"},
-    {"firstName":"Peter","lastName": "Jones"}
-];
-// function placeAutoComplete (stuff) {
-//   if (stuff) {
-//     //request.status === 200
-//     // Parse the JSON
-//
-//     // Loop over the JSON array.
-//     $.each(test, function(i, item) {
-//       dataList = document.getElementById('#auto-complete-container');
-//
-//       // Create a new <option> element.
-//       var option = document.createElement('option');
-//
-//       // Set the value using the item in the JSON array.
-//       option.value = item;
-//
-//       // Add the <option> element to the <datalist>.
-//       dataList.appendChild(option);
-//     });
-//
-//     // Update the placeholder text.
-//     input.placeholder = "e.g. datalist";
-//   } else {
-//     // An error occured :(
-//     input.placeholder = "Couldn't load datalist options :(";
-//   }
-// }
-
-
 $( document ).on('ready page:load', function() {
 
   // Cached jQuery variables

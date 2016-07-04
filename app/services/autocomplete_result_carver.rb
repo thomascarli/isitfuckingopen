@@ -13,6 +13,6 @@ class AutocompleteResultCarver
   attr_reader :result
 
   def carve_autocomplete_json
-    result.map {|place| { place.description => place.place_id } }
+    result.map {|place| { place.description.split(",").take(2).reduce(:+) => place.place_id } }
   end
 end

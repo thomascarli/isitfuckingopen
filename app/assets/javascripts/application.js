@@ -38,13 +38,27 @@ function afterLoad() {
 
 function autocomplete(location_name) {
   gps_data = {"lat": lat, "lon": lon};
-
+  look_up = '';
   $.ajax({
     url: "/autocomplete",
     type: "POST",
     data: { "location_name": location_name, "gps_data": gps_data },
     success: function(json) {
-      // YOUR FUCKING SHIT FUNCTION GOES HERE
+      // Clear out any past results
+      $dataList.empty();
+
+      // Loop over the JSON array.
+      $.each(json, function(index, elem){
+        // Create a new <option> element.
+        var option = document.createElement('option');
+
+        // Set the value using the item in the JSON array.
+        var item = Object.keys(elem);
+        option.value = item;
+
+        // Add the <option> element to the <datalist>.
+        $dataList.append(option);
+       });
     }
   });
 }
@@ -91,12 +105,49 @@ function set_lat_lon(position) {
   lon = position.coords.longitude;
 }
 
+// Get key press and preforms autoComplete
+// TEST json array
+var test = [
+    {"firstName":"John", "lastName":"Doe"},
+    {"firstName":"Anna", "lastName":"Smith"},
+    {"firstName":"Peter","lastName": "Jones"}
+];
+// function placeAutoComplete (stuff) {
+//   if (stuff) {
+//     //request.status === 200
+//     // Parse the JSON
+//
+//     // Loop over the JSON array.
+//     $.each(test, function(i, item) {
+//       dataList = document.getElementById('#auto-complete-container');
+//
+//       // Create a new <option> element.
+//       var option = document.createElement('option');
+//
+//       // Set the value using the item in the JSON array.
+//       option.value = item;
+//
+//       // Add the <option> element to the <datalist>.
+//       dataList.appendChild(option);
+//     });
+//
+//     // Update the placeholder text.
+//     input.placeholder = "e.g. datalist";
+//   } else {
+//     // An error occured :(
+//     input.placeholder = "Couldn't load datalist options :(";
+//   }
+// }
+
+
 $( document ).on('ready page:load', function() {
 
   // Cached jQuery variables
   $search_submit = $('.location-search-submit');
   $search_input = $('.location-search-input');
   $loading_container = $('.loading-container');
+  $dataList = $('#auto-complete-container');
+
   $response_container = $('.response-container');
   $error_text = $('.error-text');
 

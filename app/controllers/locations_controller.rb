@@ -6,7 +6,8 @@ class LocationsController < ApplicationController
     result = client.predictions_by_input(
       params["location_name"],
       lat: params["gps_data"]["lat"],
-      lng: params["gps_data"]["lon"]
+      lng: params["gps_data"]["lon"],
+      radius: 160000
     )
 
     autocomplete_result = ::AutocompleteResultCarver.new(result).carve

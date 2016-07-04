@@ -7,7 +7,6 @@ class LocationsController < ApplicationController
       params["location_name"],
       lat: params["gps_data"]["lat"],
       lng: params["gps_data"]["lon"],
-      radius: 16000,
       types: 'establishment'
     )
 

@@ -138,7 +138,7 @@ $( document ).on('ready page:load', function() {
         }
       }
       else {
-        autocomplete(location_name + e.key);
+        autocomplete(location_name);
       }
     }
   });

@@ -36,6 +36,18 @@ function afterLoad() {
   $search_input.show();
 }
 
+function autocomplete(location_name) {
+  gps_data = {"lat": lat, "lon": lon};
+
+  $.ajax({
+    url: "/autocomplete",
+    type: "POST",
+    data: { "location_name": location_name, "gps_data": gps_data },
+    success: function(json) {
+      // YOUR FUCKING SHIT FUNCTION GOES HERE
+    }
+  });
+}
 
 function generate_location_data(location_name) {
   gps_data = {"lat": lat, "lon": lon};
@@ -103,6 +115,9 @@ $( document ).on('ready page:load', function() {
       } else {
         generate_location_data(location_name);
       }
+    }
+    else {
+      autocomplete(location_name + e.key);
     }
   });
 

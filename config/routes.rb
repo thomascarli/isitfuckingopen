@@ -6,6 +6,7 @@ Rails.application.routes.draw do
    root 'locations#index'
 
    post 'generate_location_data', controller: "locations"
+   post 'autocomplete', controller: "locations"
 
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'

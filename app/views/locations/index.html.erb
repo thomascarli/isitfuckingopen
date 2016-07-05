@@ -13,8 +13,11 @@
      </div>
 
 	<div class='search-container'>
-	  <input class='location-search-input' placeholder="WHERE?" onfocus="this.placeholder = ''" onblur="this.placeholder = 'WHERE?'"></input>
+	  <input list="auto-complete-container" type="text" class='location-search-input' placeholder="Fucking Look something up?" onfocus="this.placeholder = ''" onblur="this.placeholder = 'WHERE?'"></input>
 		<button class='location-search-submit'>FUCK!</button>
+		<!-- data list auto complete test -->
+			<datalist id="auto-complete-container">
+			</datalist>
 	</div>
 
 	<div class='error-container'>
@@ -27,5 +30,15 @@
 		<h2 class='location-name'></h2></br>
 		<h2 class='location-address'></h2>
 	</div>
+
+
+	<!-- <div class="auto-complete-container">
+		<ul class="auto-complete-list">
+			<li>Java Stop</li>
+			<li>Jamba juice</li>
+			<li>Jokers smoke shop</li>
+		</ul>
+	</div> -->
+
 
 </div>

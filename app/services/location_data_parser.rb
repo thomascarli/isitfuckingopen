@@ -72,8 +72,12 @@ class LocationDataParser
 
   def calculate_operation_time(hours, operation)
     hours_hash = {}
-    hours["periods"].map do |v| hours_hash[v[operation]["day"]] = v[operation]["time"] end
-    hours_hash[Date.today.wday]
+    if hours["periods"]
+      hours["periods"].map do |v| hours_hash[v[operation]["day"]] = v[operation]["time"] end
+      hours_hash[Date.today.wday]
+    else
+      false
+    end
   end
 
   def get_opening_bool(hours)

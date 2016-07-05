@@ -1,7 +1,10 @@
 class LocationDataParser
 
   def initialize(params)
-    @location_id = get_location_data(params["gps_data"]["lat"], params["gps_data"]["lon"], params["location_name"])
+    @location_id = params["location_id"]
+    if @location_id.blank?
+      @location_id = get_location_data(params["gps_data"]["lat"], params["gps_data"]["lon"], params["location_name"])
+    end
   end
 
   def parse

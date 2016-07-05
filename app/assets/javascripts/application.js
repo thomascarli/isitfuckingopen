@@ -56,6 +56,7 @@ function autocomplete(location_name) {
         // Set the value using the item in the JSON array.
         var item = Object.keys(elem);
         option.value = item;
+        option.id = elem[item];
 
         // Add the <option> element to the <datalist>.
         $dataList.append(option);
@@ -64,13 +65,13 @@ function autocomplete(location_name) {
   });
 }
 
-function generate_location_data(location_name) {
+function generate_location_data(location_name, location_id) {
   gps_data = {"lat": lat, "lon": lon};
 
   $.ajax({
     url: "/generate_location_data",
     type: "POST",
-    data: { "location_name": location_name, "gps_data": gps_data },
+    data: { "location_name": location_name, "gps_data": gps_data, "location_id": location_id },
     beforeSend: function() {
       preLoader();
     },
@@ -126,6 +127,7 @@ $( document ).on('ready page:load', function() {
     timeoutId = setTimeout(processKeyPress, 500);
 
     function processKeyPress() {
+      var locaiton_id = $dataList
       var location_name = $(".location-search-input").val();
       var key = e.which || e.keyCode;
       if (key === 13) {
@@ -134,7 +136,7 @@ $( document ).on('ready page:load', function() {
           $response_container.children().empty();
 
         } else {
-          generate_location_data(location_name);
+          generate_location_data(location_name, "");
         }
       }
       else {
@@ -143,6 +145,24 @@ $( document ).on('ready page:load', function() {
     }
   });
 
+  $search_input.on('input', function(e) {
+    var val = $(this).val();
+    var place_id = "";
+    if (val.indexOf(" - ") > -1) {
+      $.each($dataList.children(), function(idx, option) {
+        if (option.value == $search_input.val()) {
+          place_id = option.id;
+        }
+      });
+      $search_input.val(val.split(' -')[0]);
+      generate_location_data("", place_id);
+    }
+  });
+
+  //
+  // $search_input.on('change', function(e) {
+  //   alert('changed!');
+  // });
 
   $search_submit.on('click', function(e) {
     var location_name = $(".location-search-input").val();

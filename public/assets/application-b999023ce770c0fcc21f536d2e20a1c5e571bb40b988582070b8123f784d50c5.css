@@ -1,0 +1,101 @@
+@font-face {
+  font-family: 'Hashtag';
+  src: url(/assets/Hashtag-c421593f6f2c3cb461aa9f3a3a97ea4dccb9dc9df0d5fd9cce7e1987077d47b8.ttf) format("truetype");
+  font-weight: normal;
+  font-style: normal;
+}
+@font-face {
+  font-family: 'Back to Black';
+  src: url(/assets/Back_to_Black-6f5aafa45c56d2b4827b7ea8626f080b92f4f71ce069678a3737d3c2b2111b4a.ttf) format("truetype");
+  font-weight: normal;
+  font-style: normal;
+}
+/* line 20, /home/vagrant/iifo/isitfuckingopen/app/assets/stylesheets/locations.scss */
+html, body {
+  height: 100%;
+}
+
+/* line 25, /home/vagrant/iifo/isitfuckingopen/app/assets/stylesheets/locations.scss */
+h1 {
+  font-family: 'Back to Black';
+  font-size: 6vw;
+  letter-spacing: 16px;
+}
+
+/* line 31, /home/vagrant/iifo/isitfuckingopen/app/assets/stylesheets/locations.scss */
+p {
+  font-family: 'Hashtag';
+  font-size: 35px;
+}
+
+/* line 36, /home/vagrant/iifo/isitfuckingopen/app/assets/stylesheets/locations.scss */
+.main-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+}
+
+/* line 44, /home/vagrant/iifo/isitfuckingopen/app/assets/stylesheets/locations.scss */
+.loading-container {
+  text-align: center;
+}
+
+/* line 48, /home/vagrant/iifo/isitfuckingopen/app/assets/stylesheets/locations.scss */
+.response-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+/*
+ * This is a manifest file that'll be compiled into application.css, which will include all the files
+ * listed below.
+ *
+ * Any CSS and SCSS file within this directory, lib/assets/stylesheets, vendor/assets/stylesheets,
+ * or any plugin's vendor/assets/stylesheets directory can be referenced here using a relative path.
+ *
+ * You're free to add application-wide styles to this file and they'll appear at the bottom of the
+ * compiled file so the styles you add here take precedence over styles defined in any styles
+ * defined in the other CSS/SCSS files in this directory. It is generally better to create a new
+ * file per style scope.
+ *
+
+
+ */
+
+
+
+
+body {
+	background-color: #faebd7;
+	margin-top: 25px;
+}
+
+
+input {
+	height: 2em;
+	width: 20em;
+}
+
+p {
+	font-family: 'Hashtag';
+	font-size: 35px;
+}
+
+
+/* Typeography for application */
+
+h1 {
+	color: #8C001A;
+}
+
+
+
+
+
+
+
+
+
+/* Media Queries */

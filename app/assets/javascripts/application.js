@@ -88,8 +88,9 @@ function generate_location_data(location_name, location_id) {
       $('.error-text').text("");
       $('.location-open-data').text(opens_in);
       $('.location-close-data').text(closes_in);
-      $('.location-name').text(name);
-      $('.location-address').text(address);
+      // Maybe we don't need to show the name? 
+      //$('.location-name').text(name);
+      $('.open-or-no').text(is_it_open);
     }
   });
 }

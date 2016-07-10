@@ -22,7 +22,7 @@ class LocationsController < ApplicationController
     location_data = ::LocationDataParser.new(params).parse
 
     result = {
-      "is_it_open": location_data[:open_data],
+      "is_it_open": is_it_fucking_open?(location_data[:open_data]),
       "loc_name":   location_data[:name],
       "address":    location_data[:address],
       "closes_in":  location_data[:closes_in] || "",
@@ -35,6 +35,14 @@ class LocationsController < ApplicationController
   end
 
   private
+
+  def is_it_fucking_open?(open_data)
+    if open_data
+      "FUCK YEA IT IS OPEN"
+    else
+      "FUCK NO THIS SHIT IS CLOSED"
+    end
+  end
 
   def client
     @client ||= GooglePlaces::Client.new(ENV['GOOGLE_ACCESS_KEY'])

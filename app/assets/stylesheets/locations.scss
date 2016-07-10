@@ -17,13 +17,39 @@
   font-style: normal;
 }
 
+@font-face {
+  font-family: 'a little sunshine';
+  src: asset-url('A_little_sunshine.ttf') format("truetype");
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'espresso';
+  src: asset-url('espresso.ttf') format("truetype");
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'dom';
+  src: asset-url('Dominique.ttf') format("truetype");
+  font-weight: normal;
+  font-style: normal;
+}
+
+textarea:focus, input:focus{
+    outline: none;
+}
+
 html, body {
 	height: 100%;
 }
 
 
 h1{
-	font-family: 'Back to Black';
+  margin-top: 0;
+	font-family: 'dom';
 	font-size: 6vw;
     letter-spacing: 16px;
 }
@@ -31,6 +57,20 @@ h1{
 p {
 	font-family: 'Hashtag';
 	font-size: 35px;
+}
+
+.location-search-input {
+  background-color: #faebd7;
+  border-style: solid;
+  border: none;
+  width: 100%;
+  font-size: 4em;
+  text-align: center;
+  font-family: 'dom'
+}
+
+.search-container {
+  width: 50%;
 }
 
 .main-container {

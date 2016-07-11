@@ -122,7 +122,7 @@ $( document ).on('ready page:load', function() {
   $loading_container.hide();
 
   // Listen for enter key and trigger functions
-  document.querySelector('.location-search-input').addEventListener('keypress', function (e) {
+  document.querySelector('.location-search-input').addEventListener('keyup', function (e) {
     clearTimeout(timeoutId);
     timeoutId = setTimeout(processKeyPress, 500);
 

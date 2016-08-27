@@ -75,8 +75,28 @@ class LocationDataParser
     if hours["periods"]
       hours["periods"].map do |v| hours_hash[v[operation]["day"]] = v[operation]["time"] end
       hours_hash[Date.today.wday]
+    elsif hours["weekday_text"]
+      hours_hash = parse_weekday_text(hours["weekday_text"], hours_hash, operation)
     else
       false
+    end
+  end
+
+  def parse_weekday_text(hours, hours_hash, operation)
+    hours.map do |d|
+      hours_hash[d.split(":", 2).first.downcase] = open_or_close_weekday_time(operation, d)
+    end
+
+    today = Date::DAYNAMES[Date.today.wday].downcase
+    hours_hash[today]
+  end
+
+  def open_or_close_weekday_time(operation, day_string)
+    new_hours = day_string.split(":", 2).last.split("AM", 2).each do |x| x.gsub!(/\D+/, '') end
+    if operation == "open"
+      new_hours.first.insert(0,"0") if new_hours.first.length == 3
+    else
+      (new_hours.last.to_i + 1200).to_s
     end
   end
 

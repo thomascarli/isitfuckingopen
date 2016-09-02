@@ -8,7 +8,7 @@ gem "figaro"
 
 gem "pry"
 
-gem "thin"
+#gem "thin"
 
 gem "geocoder"
 

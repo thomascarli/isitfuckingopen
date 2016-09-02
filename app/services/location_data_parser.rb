@@ -35,9 +35,24 @@ class LocationDataParser
       location_data[:open_data]    = get_opening_bool(location.opening_hours)
       location_data[:name]         = location.name
       location_data[:address]      = location.formatted_address
+      location_data[:time_closing] = get_closing_time_today(location_data[:closing_time])
+      location_data[:time_opening] = get_opening_time_today(location_data[:opening_time])
+
     end
 
     location_data
+  end
+
+  def get_closing_time_today(time)
+    if time
+      Time.strptime(time.tr(':', ''), '%H%M').strftime("%Y/%m/%d %H:%M:%S")
+    end
+  end
+
+  def get_opening_time_today(time)
+    if time
+      Time.strptime(time.tr(':', ''), '%H%M').strftime("%Y/%m/%d %H:%M:%S")
+    end
   end
 
   def get_closes_in(time)

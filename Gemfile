@@ -7,7 +7,6 @@ gem 'google_places'
 gem "figaro"
 
 gem "pry"
-
 #gem "thin"
 
 gem "geocoder"

@@ -100,7 +100,7 @@ function generate_location_data(location_name, location_id) {
       //$('.location-close-data').text(closes_in);
       // Maybe we don't need to show the name?
       //$('.location-name').text(name);
-      $('.open-or-no').text(is_it_open);
+      $('.open-or-no').text(is_it_open).fadeIn(1000);
     }
   });
 }
@@ -137,6 +137,21 @@ function set_lat_lon(position) {
 }
 
 $( document ).on('ready page:load', function() {
+  $('.search-container').hide();
+  $('.open-or-no').hide();
+  $('.location-close-data').hide();
+
+  var progress = 0;
+  timeout = window.setInterval(function(){
+    if (progress == 106) {
+      $("progress").hide();
+      $('.search-container').slideToggle('slow');
+      clearTimeout(timeout);
+    } else {
+      $("progress").val(progress);
+      progress = progress + 1;
+    }
+}, 25);
 
   // Cached jQuery variables
   $search_submit = $('.location-search-submit');

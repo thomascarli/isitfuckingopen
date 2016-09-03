@@ -40,9 +40,9 @@ class LocationsController < ApplicationController
 
   def is_it_fucking_open?(open_data)
     if open_data
-      "FUCK YEA IT IS OPEN"
+      "FUCK YEA."
     else
-      "FUCK NO THIS SHIT IS CLOSED"
+      "FUCK NO."
     end
   end
 

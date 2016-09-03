@@ -159,25 +159,34 @@ progress[value]::-webkit-progress-value {
   font-size: 3.5em;
 }
 
+.error-container {
+  margin-top: 3px;
+}
+
+.error-text {
+}
+.main-auto-complete-container{
+  display: flex;
+  align-content: center;
+  justify-content: center;
+  flex-direction: column;
+}
 #auto-complete-container {
   list-style: none;
   font-family: 'Times New Roman';
-  flex-direction: column;
-  width: 80%;
 }
 
 #auto-complete-container li {
-  flex-basis: 25%;
-  text-align: center;
+  text-align: left;
   padding: .3em;
 
   a {
     color: #000;
     text-decoration: none;
-    font-size: 2.2em;
+    font-size: 1.8em;
   }
   a:hover {
-    font-size: 2.3em;
+    color: #8C001A;
   }
   
 }

@@ -19,8 +19,12 @@ var lat = "";
 var lon = "";
 var timeoutId = 0;
 
-function handle_blank_input_error() {
-  $error_text.text("Protip: No one likes you. Search for something asshat.");
+function write_user_error_msg(msg) {
+  var message = msg || 'Protip: No one likes you. Search for something asshat.';
+  $error_text.text(message);
+  setTimeout(function(){
+        $error_text.animate({opacity: .25},1500, function(){ $error_text.text('') });
+  },1500);
 }
 
 function preLoader() {
@@ -80,7 +84,7 @@ function generate_location_data(location_name, location_id) {
     type: "POST",
     data: { "location_name": location_name, "gps_data": gps_data, "location_id": location_id },
     beforeSend: function() {
-      preLoader();
+      // preLoader();
     },
     complete: function() {
       afterLoad();
@@ -108,7 +112,12 @@ function generate_location_data(location_name, location_id) {
       // Maybe we don't need to show the name?
       //$('.location-name').text(name);
       $('.open-or-no').text(is_it_open).fadeIn(1000);
+
       $('.bottom-plus').fadeIn(500);
+
+    },
+    error: function(){
+      write_user_error_msg('I cant find that shit. Search some other shit!');
     }
   });
 }
@@ -164,7 +173,7 @@ $( document ).on('ready page:load', function() {
       $("progress").val(progress);
       progress = progress + 1;
     }
-}, 25);
+  }, 25);
 
   // Cached jQuery variables
   $search_input = $('.location-search-input');
@@ -200,7 +209,7 @@ $( document ).on('ready page:load', function() {
   // Listen for enter key and trigger functions
   document.querySelector('.location-search-input').addEventListener('keyup', function (e) {
     $dataList.hide();
-    $error_text.toggle();
+    $error_text.text("");
     $response_container.children().empty();
 
     clearTimeout(timeoutId);
@@ -212,7 +221,7 @@ $( document ).on('ready page:load', function() {
       // Get location when enter key is pressed
       if (key === 13) {
         if (location_name == "") {
-          handle_blank_input_error();
+          write_user_error_msg();
           $response_container.children().empty();
 
         } else {
@@ -220,7 +229,7 @@ $( document ).on('ready page:load', function() {
           generate_location_data(location_name, "");
         }
       } else if (location_name == "") {
-          handle_blank_input_error();
+          write_user_error_msg();
           $response_container.children().empty();
           $dataList.hide();
       }
@@ -233,7 +242,11 @@ $( document ).on('ready page:load', function() {
 
   // Toggle autocomplete results when drop-down-btn is clicked
   $('.drop-down-btn').on('click', function(){
-    $dataList.slideToggle('slow');
+    if ($dataList.children().length === 0) {
+      return;
+    } else {
+      $dataList.slideToggle('slow');
+    }
   });
 
 

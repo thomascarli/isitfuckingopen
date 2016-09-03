@@ -22,11 +22,13 @@ class LocationsController < ApplicationController
     location_data = ::LocationDataParser.new(params).parse
 
     result = {
-      "is_it_open": is_it_fucking_open?(location_data[:open_data]),
-      "loc_name":   location_data[:name],
-      "address":    location_data[:address],
-      "closes_in":  location_data[:closes_in] || "",
-      "opens_in":   location_data[:opens_in] || ""
+      "is_it_open":   is_it_fucking_open?(location_data[:open_data]),
+      "loc_name":     location_data[:name],
+      "address":      location_data[:address],
+      "closes_in":    location_data[:closes_in] || "",
+      "opens_in":     location_data[:opens_in] || "",
+      "time_closing": location_data[:time_closing] || "",
+      "time_opening": location_data[:time_opening] || ""
     }
 
     respond_to do |format|
@@ -38,9 +40,9 @@ class LocationsController < ApplicationController
 
   def is_it_fucking_open?(open_data)
     if open_data
-      "FUCK YEA IT IS OPEN"
+      "FUCK YEA."
     else
-      "FUCK NO THIS SHIT IS CLOSED"
+      "FUCK NO."
     end
   end
 

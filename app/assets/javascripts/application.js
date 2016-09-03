@@ -108,13 +108,15 @@ function generate_location_data(location_name, location_id) {
       // Maybe we don't need to show the name?
       //$('.location-name').text(name);
       $('.open-or-no').text(is_it_open).fadeIn(1000);
+      $('.bottom-plus').fadeIn(500);
     }
   });
 }
 
 function set_close_timer(closes_in) {
-  $('.location-close-data').countdown(closes_in, function(event) {
-    $(this).html(event.strftime('This shit is closing in %H hours %M minutes and %S seconds'));
+  $('.location-close-data').countdown(closes_in, function(event, text) {
+    $(this).html(event.strftime('in %H hours %M minutes and %S seconds'));
+    $(this).html("This shit is closing " + $(this).html());
   }).on('finish.countdown', function() {
     $('.open-or-no').hide();
     $(this).html("You fucked up.  This shit is closed as fuck.");
@@ -122,8 +124,9 @@ function set_close_timer(closes_in) {
 }
 
 function set_open_timer(opening_in) {
-  $('.location-close-data').countdown(opening_in, function(event) {
-    $(this).html(event.strftime('This shit is opening in %H hours %M minutes and %S seconds'));
+  $('.location-close-data').countdown(opening_in, function(event, text) {
+    $(this).html(event.strftime('in %H hours %M minutes and %S seconds'));
+    $(this).html("This shit is opening " + $(this).html());
   }).on('finish.countdown', function() {
     $('.open-or-no').hide();
     $(this).html("Go get your shit.  This place is fucking open.");
@@ -149,7 +152,9 @@ $( document ).on('ready page:load', function() {
   $('.open-or-no').hide();
   $('.location-close-data').hide();
 
+  // Loading bar timeout function to load gps coords
   var progress = 0;
+  var plus_or_minus = 0;
   timeout = window.setInterval(function(){
     if (progress == 106) {
       $("progress").hide();
@@ -166,6 +171,9 @@ $( document ).on('ready page:load', function() {
   $searh_container = $('.search-container');
   $loading_container = $('.loading-container');
   $dataList = $('#auto-complete-container');
+
+  $bottom_plus = $('.bottom-plus');
+
   $response_container = $('.response-container');
   $error_text = $('.error-text');
 
@@ -173,6 +181,21 @@ $( document ).on('ready page:load', function() {
   $dataList.hide();
   retrieve_gps_data();
   $loading_container.hide();
+
+  //Listen for click of plus icon to expand to access additional dataList
+  $bottom_plus.on('click', function() {
+    if(plus_or_minus == 0) {
+      $('.location-close-data').slideToggle('slow');
+      $bottom_plus.addClass('fa-minus-circle');
+      $bottom_plus.removeClass('fa-clock-o');
+      plus_or_minus = 1;
+    } else {
+      $('.location-close-data').slideToggle('slow');
+      $bottom_plus.addClass('fa-clock-o');
+      $bottom_plus.removeClass('fa-minus-circle');
+      plus_or_minus = 0;
+    }
+  });
 
   // Listen for enter key and trigger functions
   document.querySelector('.location-search-input').addEventListener('keyup', function (e) {

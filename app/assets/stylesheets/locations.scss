@@ -106,6 +106,17 @@ progress[value]::-webkit-progress-value {
   background-color: #8C001A;
 }
 
+.bottom-plus {
+  color: #8C001A;
+  cursor: pointer;
+}
+
+.additional-info-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
 
 .location-search-input {
   background-color: #FBFFFE;

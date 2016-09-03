@@ -91,6 +91,7 @@ function generate_location_data(location_name, location_id) {
       // Maybe we don't need to show the name?
       //$('.location-name').text(name);
       $('.open-or-no').text(is_it_open).fadeIn(1000);
+      $('.bottom-plus').fadeIn(500);
     }
   });
 }
@@ -113,7 +114,9 @@ $( document ).on('ready page:load', function() {
   $('.open-or-no').hide();
   $('.location-close-data').hide();
 
+  // Loading bar timeout function to load gps coords
   var progress = 0;
+  var plus_or_minus = 0;
   timeout = window.setInterval(function(){
     if (progress == 106) {
       $("progress").hide();
@@ -130,12 +133,28 @@ $( document ).on('ready page:load', function() {
   $search_input = $('.location-search-input');
   $loading_container = $('.loading-container');
   $dataList = $('#auto-complete-container');
+  $bottom_plus = $('.bottom-plus');
 
   $response_container = $('.response-container');
   $error_text = $('.error-text');
 
   retrieve_gps_data();
   $loading_container.hide();
+
+  //Listen for click of plus icon to expand to access additional dataList
+  $bottom_plus.on('click', function() {
+    if(plus_or_minus == 0) {
+      $('.location-close-data').slideToggle('slow');
+      $bottom_plus.addClass('fa-minus-circle');
+      $bottom_plus.removeClass('fa-plus-circle');
+      plus_or_minus = 1;
+    } else {
+      $('.location-close-data').slideToggle('slow');
+      $bottom_plus.addClass('fa-plus-circle');
+      $bottom_plus.removeClass('fa-minus-circle');
+      plus_or_minus = 0;
+    }
+  });
 
   // Listen for enter key and trigger functions
   document.querySelector('.location-search-input').addEventListener('keyup', function (e) {

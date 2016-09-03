@@ -107,8 +107,9 @@ function generate_location_data(location_name, location_id) {
 }
 
 function set_close_timer(closes_in) {
-  $('.location-close-data').countdown(closes_in, function(event) {
-    $(this).html(event.strftime('This shit is closing in %H hours %M minutes and %S seconds'));
+  $('.location-close-data').countdown(closes_in, function(event, text) {
+    $(this).html(event.strftime('in %H hours %M minutes and %S seconds'));
+    $(this).html("This shit is closing " + $(this).html());
   }).on('finish.countdown', function() {
     $('.open-or-no').hide();
     $(this).html("You fucked up.  This shit is closed as fuck.");
@@ -116,8 +117,9 @@ function set_close_timer(closes_in) {
 }
 
 function set_open_timer(opening_in) {
-  $('.location-close-data').countdown(opening_in, function(event) {
-    $(this).html(event.strftime('This shit is opening in %H hours %M minutes and %S seconds'));
+  $('.location-close-data').countdown(opening_in, function(event, text) {
+    $(this).html(event.strftime('in %H hours %M minutes and %S seconds'));
+    $(this).html("This shit is opening " + $(this).html());
   }).on('finish.countdown', function() {
     $('.open-or-no').hide();
     $(this).html("Go get your shit.  This place is fucking open.");
@@ -174,11 +176,11 @@ $( document ).on('ready page:load', function() {
     if(plus_or_minus == 0) {
       $('.location-close-data').slideToggle('slow');
       $bottom_plus.addClass('fa-minus-circle');
-      $bottom_plus.removeClass('fa-plus-circle');
+      $bottom_plus.removeClass('fa-clock-o');
       plus_or_minus = 1;
     } else {
       $('.location-close-data').slideToggle('slow');
-      $bottom_plus.addClass('fa-plus-circle');
+      $bottom_plus.addClass('fa-clock-o');
       $bottom_plus.removeClass('fa-minus-circle');
       plus_or_minus = 0;
     }

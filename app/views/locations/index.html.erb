@@ -2,7 +2,7 @@
 <div class="main-container">
 
 	<div>
-	 <h1>Is it Fucking Open? </h1>
+		<h1>Is it Fucking Open? </h1>
 	</div>
 
 	<br>
@@ -10,21 +10,28 @@
 	<div class="loading-container">
 		<p>Please wait while your information loads.</p>
 		<%= image_tag("ajax-loader.gif", :alt => "ajax-loader") %>
-     </div>
+	</div>
 
 	<div class='search-container'>
-	  <input list="auto-complete-container" type="text" class='location-search-input' placeholder="Look something up. Assface." onfocus="this.placeholder = ''" onblur="this.placeholder = 'WHERE?'"></input>
-		<!-- <button class='location-search-submit'>FUCK!</button> -->
-		<!-- data list auto complete test -->
-			<datalist id="auto-complete-container">
-			</datalist>
+		<div class='input-search-container'>
+		  <input type="text" class='location-search-input' placeholder="Look something up. Assface." onfocus="this.placeholder = ''" onblur="this.placeholder = 'WHERE?'"></input>
+
+			<div class="drop-down-btn">
+				<i class="fa fa-angle-down" aria-hidden="true"></i>
+			</div>
+		</div>
 	</div>
 
-	<div class='error-container'>
-		<h2 class='error-text'></h2>
+	<div class="main-auto-complete-container">
+		<ul id='auto-complete-container'></ul>
 	</div>
+		<div class='error-container'>
+			<h2 class='error-text'></h2>
+		</div>
 
 	<div class='response-container'>
+
+		
 		<h2 class='open-or-no'></h2>
 	</div>
 
@@ -36,15 +43,5 @@
 			<h2 class='location-close-data'></h2>
 		</div>
 	</div>
-
-
-	<!-- <div class="auto-complete-container">
-		<ul class="auto-complete-list">
-			<li>Java Stop</li>
-			<li>Jamba juice</li>
-			<li>Jokers smoke shop</li>
-		</ul>
-	</div> -->
-
 
 </div>

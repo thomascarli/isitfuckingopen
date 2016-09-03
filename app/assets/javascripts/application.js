@@ -14,27 +14,29 @@
 //= require jquery_ujs
 //= require turbolinks
 //= require_tree .
-
+var linkTest = '';
 var lat = "";
 var lon = "";
 var timeoutId = 0;
 
-function handle_blank_input_error() {
-  $error_text.text("Protip: No one likes you. Search for something asshat.");
+function write_user_error_msg(msg) {
+  var message = msg || 'Protip: No one likes you. Search for something asshat.';
+  $error_text.text(message);
+  setTimeout(function(){
+        $error_text.animate({opacity: .25},1500, function(){ $error_text.text('') });
+  },1500);
 }
 
 function preLoader() {
   $loading_container.show();
-  $search_submit.hide();
-  $search_input.hide();
+  $searh_container.hide();
   $error_text.text("");
   $response_container.children().empty();
 }
 
 function afterLoad() {
   $loading_container.hide();
-  $search_submit.show();
-  $search_input.show();
+  $searh_container.show();
 }
 
 function autocomplete(location_name) {
@@ -50,19 +52,28 @@ function autocomplete(location_name) {
 
       // Loop over the JSON array.
       $.each(json, function(index, elem){
-        // Create a new <option> element.
-        var option = document.createElement('option');
 
         // Set the value using the item in the JSON array.
         var item = Object.keys(elem);
-        option.value = item;
+        
+        // Create a new <li> element.
+        var option = document.createElement('li');
+        option.type = item;
         option.id = elem[item];
 
-        // Add the <option> element to the <datalist>.
+        var link = document.createElement('a');
+        link.href = '#';
+        link.textContent = item;
+
+        //push <a> into <li>
+        option.appendChild(link);
+        
+        // Add the <li> elements to the <ul auto-complete-container>
         $dataList.append(option);
        });
     }
   });
+  $dataList.slideToggle('slow');
 }
 
 function generate_location_data(location_name, location_id) {
@@ -73,7 +84,7 @@ function generate_location_data(location_name, location_id) {
     type: "POST",
     data: { "location_name": location_name, "gps_data": gps_data, "location_id": location_id },
     beforeSend: function() {
-      preLoader();
+      // preLoader();
     },
     complete: function() {
       afterLoad();
@@ -101,7 +112,12 @@ function generate_location_data(location_name, location_id) {
       // Maybe we don't need to show the name?
       //$('.location-name').text(name);
       $('.open-or-no').text(is_it_open).fadeIn(1000);
+
       $('.bottom-plus').fadeIn(500);
+
+    },
+    error: function(){
+      write_user_error_msg('I cant find that shit. Search some other shit!');
     }
   });
 }
@@ -139,6 +155,7 @@ function set_lat_lon(position) {
   lon = position.coords.longitude;
 }
 
+
 $( document ).on('ready page:load', function() {
   $('.search-container').hide();
   $('.open-or-no').hide();
@@ -156,18 +173,21 @@ $( document ).on('ready page:load', function() {
       $("progress").val(progress);
       progress = progress + 1;
     }
-}, 25);
+  }, 25);
 
   // Cached jQuery variables
-  $search_submit = $('.location-search-submit');
   $search_input = $('.location-search-input');
+  $searh_container = $('.search-container');
   $loading_container = $('.loading-container');
   $dataList = $('#auto-complete-container');
+
   $bottom_plus = $('.bottom-plus');
 
   $response_container = $('.response-container');
   $error_text = $('.error-text');
 
+  // Initializers on ready
+  $dataList.hide();
   retrieve_gps_data();
   $loading_container.hide();
 
@@ -188,50 +208,83 @@ $( document ).on('ready page:load', function() {
 
   // Listen for enter key and trigger functions
   document.querySelector('.location-search-input').addEventListener('keyup', function (e) {
+    $dataList.hide();
+    $error_text.text("");
+    $response_container.children().empty();
+
     clearTimeout(timeoutId);
     timeoutId = setTimeout(processKeyPress, 500);
 
     function processKeyPress() {
-      var locaiton_id = $dataList
       var location_name = $(".location-search-input").val();
       var key = e.which || e.keyCode;
+      // Get location when enter key is pressed
       if (key === 13) {
         if (location_name == "") {
-          handle_blank_input_error();
+          write_user_error_msg();
           $response_container.children().empty();
 
         } else {
+          console.log(location_name);
           generate_location_data(location_name, "");
         }
+      } else if (location_name == "") {
+          write_user_error_msg();
+          $response_container.children().empty();
+          $dataList.hide();
       }
+      // Gets location when user id done tying and doesnt press enter.
       else {
         autocomplete(location_name);
       }
     }
   });
 
-  $search_input.on('input', function(e) {
-    var val = $(this).val();
-    var place_id = "";
-    if (val.indexOf(" - ") > -1) {
-      $.each($dataList.children(), function(idx, option) {
-        if (option.value == $search_input.val()) {
-          place_id = option.id;
-        }
-      });
-      $search_input.val(val.split(' -')[0]);
-      generate_location_data("", place_id);
+  // Toggle autocomplete results when drop-down-btn is clicked
+  $('.drop-down-btn').on('click', function(){
+    if ($dataList.children().length === 0) {
+      return;
+    } else {
+      $dataList.slideToggle('slow');
     }
   });
 
-  //
-  // $search_input.on('change', function(e) {
-  //   alert('changed!');
+
+  
+  // EvenListener, watch auto-complete-container for selection
+  document.getElementById('auto-complete-container').addEventListener('click', function(e) {
+    e.preventDefault();
+    if (e.target.nodeName === 'A') {
+      place = e.target.textContent.split(' -')[0];
+      // update input bar for aesthetics
+      $search_input.val(place);
+      // parse out the id of place and seach
+      generate_location_data('', e.target.parentElement.id);
+      $dataList.hide();
+    }
+  });
+
+
+  // FUCNTION ABOVE REPLACES LOGIC FOR ' - '
+  // $search_input.on('input', function(e) {
+  //   var val = $(this).val();
+  //   console.log('val is now: ' + val);
+  //   var place_id = "";
+
+  //   if (val.indexOf(" - ") > -1) {
+  //     $.each($dataList.children(), function(idx, option) {
+  //       if (option.type == $search_input.val()) {
+  //         place_id = option.id;
+  //       }
+  //     });
+  //     $search_input.val(val.split(' -')[0]);
+  //     generate_location_data("", place_id);
+  //   } else {
+  //     console.log('-1 is greater then val!');
+  //     $dataList.hide();
+  //   }
   // });
 
-  $search_submit.on('click', function(e) {
-    var location_name = $(".location-search-input").val();
-    generate_location_data(location_name);
-  });
+
 
 });

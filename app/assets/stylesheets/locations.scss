@@ -93,6 +93,28 @@ p {
 	font-size: 35px;
 }
 
+.main-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100%
+}
+
+.loading-container {
+  text-align: center;
+}
+
+.search-container {
+  width: 50%;
+}
+
+.input-search-container {
+  display: flex;
+  flex-direction: row;
+  align-self: baseline;
+}
+
 progress[value] {
   -webkit-appearance: none;
   appearance: none;
@@ -132,20 +154,41 @@ progress[value]::-webkit-progress-value {
   font-family: 'comic-sans'
 }
 
-.search-container {
-  width: 50%;
+.drop-down-btn{
+  align-self: center;
+  font-size: 3.5em;
 }
 
-.main-container {
-	display: flex;
-	flex-direction: column;
-	justify-content: center;
-	align-items: center;
-	height: 100%
+.error-container {
+  margin-top: 3px;
 }
 
-.loading-container {
-	text-align: center;
+.error-text {
+}
+.main-auto-complete-container{
+  display: flex;
+  align-content: center;
+  justify-content: center;
+  flex-direction: column;
+}
+#auto-complete-container {
+  list-style: none;
+  font-family: 'Times New Roman';
+}
+
+#auto-complete-container li {
+  text-align: left;
+  padding: .3em;
+
+  a {
+    color: #000;
+    text-decoration: none;
+    font-size: 1.8em;
+  }
+  a:hover {
+    color: #8C001A;
+  }
+  
 }
 
 .open-or-no {

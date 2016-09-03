@@ -12,7 +12,7 @@ gem "pry"
 
 gem "geocoder"
 
-
+gem "font-awesome-rails"
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '4.2.6'

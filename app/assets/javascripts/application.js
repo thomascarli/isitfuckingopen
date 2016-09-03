@@ -79,20 +79,48 @@ function generate_location_data(location_name, location_id) {
       afterLoad();
     },
     success: function(json) {
-      is_it_open = json.is_it_open.toString();
-      closes_in  = json.closes_in.toString();
-      opens_in   = json.opens_in.toString();
-      name       = json.loc_name.toString();
-      address    = json.address.toString();
+      is_it_open   = json.is_it_open.toString();
+      closes_in    = json.closes_in.toString();
+      opens_in     = json.opens_in.toString();
+      name         = json.loc_name.toString();
+      address      = json.address.toString();
+      time_closing = json.time_closing.toString();
+      time_opening = json.time_opening.toString();
 
       $('.error-text').text("");
-      $('.location-open-data').text(opens_in);
-      $('.location-close-data').text(closes_in);
+      //$('.location-open-data').text(opens_in);
+
+      if (time_closing != "") {
+        set_close_timer(time_closing);
+      }
+
+      if (time_opening != "") {
+        set_open_timer(time_opening);
+      }
+      //$('.location-close-data').text(closes_in);
       // Maybe we don't need to show the name?
       //$('.location-name').text(name);
       $('.open-or-no').text(is_it_open).fadeIn(1000);
       $('.bottom-plus').fadeIn(500);
     }
+  });
+}
+
+function set_close_timer(closes_in) {
+  $('.location-close-data').countdown(closes_in, function(event) {
+    $(this).html(event.strftime('This shit is closing in %H hours %M minutes and %S seconds'));
+  }).on('finish.countdown', function() {
+    $('.open-or-no').hide();
+    $(this).html("You fucked up.  This shit is closed as fuck.");
+  });
+}
+
+function set_open_timer(opening_in) {
+  $('.location-close-data').countdown(opening_in, function(event) {
+    $(this).html(event.strftime('This shit is opening in %H hours %M minutes and %S seconds'));
+  }).on('finish.countdown', function() {
+    $('.open-or-no').hide();
+    $(this).html("Go get your shit.  This place is fucking open.");
   });
 }
 

@@ -22,9 +22,9 @@ var timeoutId = 0;
 function write_user_error_msg(msg) {
   var message = msg || 'Protip: No one likes you. Search for something asshat.';
   $error_text.text(message);
-  setTimeout(function(){
-        $error_text.animate({opacity: .25},1500, function(){ $error_text.text('') });
-  },1500);
+  $error_text.show();
+  $error_text.fadeOut(3700);
+
 }
 
 function preLoader() {
@@ -50,6 +50,7 @@ function autocomplete(location_name) {
       // Clear out any past results
       $dataList.empty();
 
+
       // Loop over the JSON array.
       $.each(json, function(index, elem){
 
@@ -71,9 +72,9 @@ function autocomplete(location_name) {
         // Add the <li> elements to the <ul auto-complete-container>
         $dataList.append(option);
        });
+      $dataList.slideToggle('slow');
     }
   });
-  $dataList.slideToggle('slow');
 }
 
 $.fn.extend({
@@ -225,7 +226,7 @@ $( document ).on('ready page:load', function() {
 
   // Listen for enter key and trigger functions
   document.querySelector('.location-search-input').addEventListener('keyup', function (e) {
-    $dataList.hide();
+    $dataList.fadeOut();
     $error_text.text("");
     $response_container.children().empty();
 
@@ -281,28 +282,5 @@ $( document ).on('ready page:load', function() {
       generate_location_data('', e.target.parentElement.id);
     }
   });
-
-
-  // FUCNTION ABOVE REPLACES LOGIC FOR ' - '
-  // $search_input.on('input', function(e) {
-  //   var val = $(this).val();
-  //   console.log('val is now: ' + val);
-  //   var place_id = "";
-
-  //   if (val.indexOf(" - ") > -1) {
-  //     $.each($dataList.children(), function(idx, option) {
-  //       if (option.type == $search_input.val()) {
-  //         place_id = option.id;
-  //       }
-  //     });
-  //     $search_input.val(val.split(' -')[0]);
-  //     generate_location_data("", place_id);
-  //   } else {
-  //     console.log('-1 is greater then val!');
-  //     $dataList.hide();
-  //   }
-  // });
-
-
 
 });

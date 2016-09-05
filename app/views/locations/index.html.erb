@@ -1,46 +1,48 @@
 
 <div class="main-container">
+	<div class='top-1'>
+		<div>
+			<h1>Is it Fucking Open? </h1>
+		</div>
+		<br>
+		<progress max=100 value=0 style='width: 100%'></progress>
+		<!-- <div class="loading-container">
+			<p>Please wait while your information loads.</p>
+			<%= image_tag("ajax-loader.gif", :alt => "ajax-loader") %>
+		</div> -->
 
-	<div>
-		<h1>Is it Fucking Open? </h1>
-	</div>
+		<div class='search-container'>
+			<div class='input-search-container'>
+				<input type="text" class='location-search-input' placeholder="Look something up. Asshat." onfocus="this.placeholder = ''" onblur="this.placeholder = 'Hurry up ya tosser.'"></input>
 
-	<br>
-	<progress max=100 value=0 style='width: 100%'></progress>
-	<div class="loading-container">
-		<p>Please wait while your information loads.</p>
-		<%= image_tag("ajax-loader.gif", :alt => "ajax-loader") %>
-	</div>
-
-	<div class='search-container'>
-		<div class='input-search-container'>
-		  <input type="text" class='location-search-input' placeholder="Look something up. Assface." onfocus="this.placeholder = ''" onblur="this.placeholder = 'WHERE?'"></input>
-
-			<div class="drop-down-btn">
-				<i class="fa fa-angle-down" aria-hidden="true"></i>
+				<!-- <div class="drop-down-btn">
+					<i class="fa fa-angle-down" aria-hidden="true"></i>
+				</div> -->
 			</div>
 		</div>
 	</div>
 
-	<div class="main-auto-complete-container">
-		<ul id='auto-complete-container'></ul>
-	</div>
+	<div class='middle-1'>
+		<div class="main-auto-complete-container">
+			<ul id='auto-complete-container'></ul>
+		</div>
 		<div class='error-container'>
 			<h2 class='error-text'></h2>
 		</div>
-
-	<div class='response-container'>
-
-		
-		<h2 class='open-or-no'></h2>
 	</div>
 
-	<div class='additional-info-container'>
-		<div>
-			<i class='bottom-plus fa fa-clock-o fa-lg' style='display: none'></i>
+	<div class='bottom-1'>
+		<div class='response-container'>
+			<h2 class='open-or-no'></h2>
 		</div>
-		<div>
-			<h2 class='location-close-data'></h2>
+
+		<div class='additional-info-container'>
+			<div>
+				<i class='bottom-plus fa fa-clock-o fa-2x' style='display: none'></i>
+			</div>
+			<div>
+				<h2 class='location-close-data'></h2>
+			</div>
 		</div>
 	</div>
 

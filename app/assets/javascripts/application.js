@@ -22,9 +22,9 @@ var timeoutId = 0;
 function write_user_error_msg(msg) {
   var message = msg || 'Protip: No one likes you. Search for something asshat.';
   $error_text.text(message);
-  setTimeout(function(){
-        $error_text.fadeOut(700, function(){ $error_text.text('') });
-  },1500);
+  $error_text.show();
+  $error_text.fadeOut(3700);
+
 }
 
 function preLoader() {
@@ -56,7 +56,7 @@ function autocomplete(location_name) {
 
         // Set the value using the item in the JSON array.
         var item = Object.keys(elem);
-        
+
         // Create a new <li> element.
         var option = document.createElement('li');
         option.type = item;
@@ -68,24 +68,23 @@ function autocomplete(location_name) {
 
         //push <a> into <li>
         option.appendChild(link);
-        
+
         // Add the <li> elements to the <ul auto-complete-container>
         $dataList.append(option);
        });
-    },
-    complete: function() {
-      $dataList.show();
-      $('ul#auto-complete-container li').hide().each(function(index){
-        $(this).delay(400*index).fadeIn(800);
-      });
+      $dataList.slideToggle('slow');
     }
   });
-    // $dataList.slideToggle('slow');
 }
 
-function slow_display(){
-
-}
+$.fn.extend({
+    animateCss: function (animationName) {
+        var animationEnd = 'webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend';
+        this.addClass('animated ' + animationName).one(animationEnd, function() {
+            $(this).removeClass('animated ' + animationName);
+        });
+    }
+});
 
 function generate_location_data(location_name, location_id) {
   gps_data = {"lat": lat, "lon": lon};
@@ -187,12 +186,12 @@ $( document ).on('ready page:load', function() {
   }, 25);
 
   // Cached jQuery variables
-  $search_input = $('.location-search-input');
-  $searh_container = $('.search-container');
+  $search_input      = $('.location-search-input');
+  $searh_container   = $('.search-container');
   $loading_container = $('.loading-container');
-  $dataList = $('#auto-complete-container');
-
-  $bottom_plus = $('.bottom-plus');
+  $dataList          = $('#auto-complete-container');
+  $open_or_no        = $('.open-or-no');
+  $bottom_plus       = $('.bottom-plus');
 
   $response_container = $('.response-container');
   $error_text = $('.error-text');
@@ -217,9 +216,17 @@ $( document ).on('ready page:load', function() {
     }
   });
 
+  $open_or_no.on('click', function() {
+    var font_array = ['dom', 'staravenue', 'iarnold','hashtag', 'sunshine',' back to black','espresso', 'doodlegum'];
+    var random_elem = font_array[Math.floor(Math.random() * font_array.length)];
+    $open_or_no.animateCss('shake');
+    //$open_or_no.css('font-family', random_elem);
+
+  })
+
   // Listen for enter key and trigger functions
   document.querySelector('.location-search-input').addEventListener('keyup', function (e) {
-    $dataList.hide();
+    $dataList.fadeOut();
     $error_text.text("");
     $response_container.children().empty();
 
@@ -232,17 +239,18 @@ $( document ).on('ready page:load', function() {
       // Get location when enter key is pressed
       if (key === 13) {
         if (location_name == "") {
+          $bottom_plus.fadeOut();
           write_user_error_msg();
           $response_container.children().empty();
 
         } else {
-          console.log(location_name);
           generate_location_data(location_name, "");
         }
       } else if (location_name == "") {
           write_user_error_msg();
           $response_container.children().empty();
           $dataList.hide();
+          $bottom_plus.fadeOut();
       }
       // Gets location when user id done tying and doesnt press enter.
       else {
@@ -261,7 +269,7 @@ $( document ).on('ready page:load', function() {
   });
 
 
-  
+
   // EvenListener, watch auto-complete-container for selection
   document.getElementById('auto-complete-container').addEventListener('click', function(e) {
     e.preventDefault();
@@ -270,32 +278,9 @@ $( document ).on('ready page:load', function() {
       // update input bar for aesthetics
       $search_input.val(place);
       // parse out the id of place and seach
+      $dataList.slideToggle('slow');
       generate_location_data('', e.target.parentElement.id);
-      $dataList.hide();
     }
   });
-
-
-  // FUCNTION ABOVE REPLACES LOGIC FOR ' - '
-  // $search_input.on('input', function(e) {
-  //   var val = $(this).val();
-  //   console.log('val is now: ' + val);
-  //   var place_id = "";
-
-  //   if (val.indexOf(" - ") > -1) {
-  //     $.each($dataList.children(), function(idx, option) {
-  //       if (option.type == $search_input.val()) {
-  //         place_id = option.id;
-  //       }
-  //     });
-  //     $search_input.val(val.split(' -')[0]);
-  //     generate_location_data("", place_id);
-  //   } else {
-  //     console.log('-1 is greater then val!');
-  //     $dataList.hide();
-  //   }
-  // });
-
-
 
 });

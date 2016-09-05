@@ -23,7 +23,7 @@ function write_user_error_msg(msg) {
   var message = msg || 'Protip: No one likes you. Search for something asshat.';
   $error_text.text(message);
   setTimeout(function(){
-        $error_text.animate({opacity: .25},1500, function(){ $error_text.text('') });
+        $error_text.fadeOut(700, function(){ $error_text.text('') });
   },1500);
 }
 
@@ -50,6 +50,7 @@ function autocomplete(location_name) {
       // Clear out any past results
       $dataList.empty();
 
+
       // Loop over the JSON array.
       $.each(json, function(index, elem){
 
@@ -71,9 +72,19 @@ function autocomplete(location_name) {
         // Add the <li> elements to the <ul auto-complete-container>
         $dataList.append(option);
        });
+    },
+    complete: function() {
+      $dataList.show();
+      $('ul#auto-complete-container li').hide().each(function(index){
+        $(this).delay(400*index).fadeIn(800);
+      });
     }
   });
-  $dataList.slideToggle('slow');
+    // $dataList.slideToggle('slow');
+}
+
+function slow_display(){
+
 }
 
 function generate_location_data(location_name, location_id) {

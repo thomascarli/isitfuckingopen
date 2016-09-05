@@ -93,20 +93,23 @@ p {
 	font-size: 35px;
 }
 
+
 .main-container {
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  height: 100%
+  height: 100%;
 }
+
 
 .loading-container {
   text-align: center;
 }
 
 .search-container {
-  width: 50%;
+  /*width: 50%;*/
+
 }
 
 .input-search-container {
@@ -148,7 +151,6 @@ progress[value]::-webkit-progress-value {
   background-color: #FBFFFE;
   border-style: solid;
   border: none;
-  width: 100%;
   font-size: 3em;
   text-align: center;
   font-family: 'comic-sans'
@@ -165,34 +167,47 @@ progress[value]::-webkit-progress-value {
 
 .error-text {
 }
-.main-auto-complete-container{
-  display: flex;
-  align-content: center;
-  justify-content: center;
-  flex-direction: column;
+.main-auto-complete-container {
+    display: flex;
+    min-width: 100%;
+    flex-direction: column;
+    align-items: center;
 }
 #auto-complete-container {
   list-style: none;
   font-family: 'Times New Roman';
 }
 
-#auto-complete-container li {
-  text-align: left;
-  padding: .3em;
+#auto-complete-container {
+  list-style: none;
+  align-items: center;
+  font-family: 'Times New Roman';
 
-  a {
-    color: #000;
-    text-decoration: none;
-    font-size: 1.8em;
+  li {
+    padding: .3em;
+    margin: 2px;
+    a {
+      color: #000;
+      text-decoration: none;
+      align-self: center;
+      font-size: 1.8em;
+      padding: 3px;
+    }
   }
   a:hover {
-    color: #8C001A;
+    box-shadow: inset 0px 0px 9px #FBFFFE;
+    border-radius: 2.5px;
+    background-color: #8C001A;
+    width: 100%;
+    text-decoration: none;
+    color: #FBFFFE;
   }
-  
 }
+
 
 .open-or-no {
   margin-top: 100px;
+  flex-grow: 3;
   font-family: 'doodlegum';
   font-size: 3em;
 }

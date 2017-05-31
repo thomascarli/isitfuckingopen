@@ -1,6 +1,6 @@
 # IS IT FUCKING OPEN?
 
-No, but seriously.  IS IT FUCKING OPEN?!
+No, but seriously,  IS IT FUCKING OPEN?!
 
 ## Contributing
 

@@ -10,6 +10,15 @@ No, but seriously.  IS IT FUCKING OPEN?!
 * Push to the branch (git push origin my-new-feature)
 * Create new Pull Request
 
+# TODOs
+
+- Responsive for mobile
+- Digital Clock as count-down
+- Background becomes opaque map after location is found
+- Image of search is loaded
+- Uber API
+
+
 ## Authors
 
 * **Thomas Carli** - *Initial work* - [thomascarli](https://github.com/thomascarli)
